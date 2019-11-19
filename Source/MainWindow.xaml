@@ -1,0 +1,26 @@
+﻿<Window x:Class="rzeczuchyToDo2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:rzeczuchyToDo2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="NewToDoTextBox"
+                 Grid.Row="0"/>
+        <Button x:Name="AddToDoButton"
+                Content="Add"
+                Click="AddToDoButton_Click"
+                Grid.Row="1"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Grid.Row="2">
+            <ListView x:Name="ToDoListView"/>
+        </ScrollViewer>
+    </Grid>
+</Window>
