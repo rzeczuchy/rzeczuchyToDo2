@@ -1,2 +1,2 @@
 # rzeczuchyToDo2
-A remake of the rzeczuchyToDo app, this time based on WPF :)
+A remake of the ![rzeczuchyToDo app](https://github.com/rzeczuchy/rzeczuchyToDo), this time based on WPF :)
