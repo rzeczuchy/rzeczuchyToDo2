@@ -17,19 +17,18 @@ namespace rzeczuchyToDo2
 {
     public partial class MainWindow : Window
     {
-        private Stack<ToDo> todos;
+        private List<ToDo> todos;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            todos = new Stack<ToDo>();
-            todos.Push(new ToDo("this is a checked ToDo", true));
-            todos.Push(new ToDo("this is an unchecked ToDo", false));
-            for (int i = 0; i < 100; i++)
+            todos = new List<ToDo>();
+            todos.Add(new ToDo("this is a checked ToDo", true));
+            todos.Add(new ToDo("this is an unchecked ToDo", false));
+            for (int i = 0; i < 24; i++)
             {
-                todos.Push(new ToDo("this is a checked ToDo", true));
-                todos.Push(new ToDo("this is an unchecked ToDo", false));
+                todos.Add(new ToDo("this is an unchecked ToDo", false));
             }
             NewToDoTextBox.MaxLength = ToDo.MaxNameLenght;
 
@@ -48,10 +47,24 @@ namespace rzeczuchyToDo2
         {
             if (NewToDoTextBox.Text != "")
             {
-                todos.Push(new ToDo(NewToDoTextBox.Text, false));
+                todos.Add(new ToDo(NewToDoTextBox.Text, false));
                 ToDoListView.Items.Refresh();
             }
             NewToDoTextBox.Text = "";
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is ToDo todo)
+            {
+                todos.Remove(todo);
+                ToDoListView.Items.Refresh();
+            }
+        }
+
+        private void ToDoCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            ToDoListView.Items.Refresh();
         }
     }
 }
