@@ -18,20 +18,21 @@ namespace rzeczuchyToDo2
     class ToDo
     {
         public const int MaxNameLenght = 50;
-        private readonly SolidColorBrush black;
-        private readonly SolidColorBrush gray;
+        private readonly SolidColorBrush active;
+        private readonly SolidColorBrush inactive;
 
         public ToDo(string name, bool isChecked)
         {
             Name = name.Length > MaxNameLenght ? name.Substring(0, MaxNameLenght) : name;
             IsChecked = isChecked;
-            black = new SolidColorBrush() { Color = Colors.Black };
-            gray = new SolidColorBrush() { Color = Colors.Gray };
+            active = new SolidColorBrush() { Color = Colors.WhiteSmoke };
+            inactive = new SolidColorBrush() { Color = Colors.LightSlateGray };
         }
 
         public string Name { get; private set; }
         public bool IsChecked { get; set; }
-        public SolidColorBrush TextColor { get { return IsChecked ? gray : black; } }
+        public SolidColorBrush TextColor { get { return IsChecked ? inactive : active; } }
+        public TextDecorationCollection Decorations { get { return IsChecked ? TextDecorations.Strikethrough : null; } }
 
         public override string ToString()
         {

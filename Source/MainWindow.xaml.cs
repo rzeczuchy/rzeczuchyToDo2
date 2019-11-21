@@ -31,7 +31,7 @@ namespace rzeczuchyToDo2
                 todos.Add(new ToDo("this is an unchecked ToDo", false));
             }
             NewToDoTextBox.MaxLength = ToDo.MaxNameLenght;
-
+            
             DisplayToDoList();
         }
 
