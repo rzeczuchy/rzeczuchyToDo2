@@ -26,7 +26,7 @@ namespace rzeczuchyToDo2
             todos = new List<ToDo>();
             todos.Add(new ToDo("this is a checked ToDo", true));
             todos.Add(new ToDo("this is an unchecked ToDo", false));
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 24; i++)
             {
                 todos.Add(new ToDo("this is an unchecked ToDo", false));
             }

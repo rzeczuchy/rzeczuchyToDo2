@@ -6,59 +6,126 @@
         xmlns:local="clr-namespace:rzeczuchyToDo2"
         mc:Ignorable="d"
         Title="MainWindow"
-        Height="400"
+        Height="430"
         Width="600"
-        Background="#1d2d3a"
+        Background="#1c2a39"
         ResizeMode="CanMinimize">
+
     <Window.Resources>
+        <Color x:Key="LightTextColor">White</Color>
+        <Color x:Key="TextColor">WhiteSmoke</Color>
+        <Color x:Key="DarkenedTextColor">LightSlateGray</Color>
+        <SolidColorBrush x:Key="LightTextBrush" Color="{StaticResource LightTextColor}"/>
+        <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}"/>
+        <SolidColorBrush x:Key="DarkenedTextBrush" Color="{StaticResource DarkenedTextColor}"/>
+        <SolidColorBrush x:Key="LightBackgroundBrush" Color="#304760"/>
+        <SolidColorBrush x:Key="LighterBackgroundBrush" Color="#596b7f"/>
+        <SolidColorBrush x:Key="DarkBackgroundBrush" Color="#1c2a39"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#c94570"/>
+
         <Style TargetType="{x:Type Control}" x:Key="DefaultStyle">
-            <Setter Property="Background" Value="#3c586d"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource LighterBackgroundBrush}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Calibri"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="600"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Style.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="15"/>
+                    <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Style.Resources>
         </Style>
+        
         <Style TargetType="Button" x:Key="DefaultButtonStyle" BasedOn="{StaticResource DefaultStyle}">
-            <Setter Property="Background" Value="DeepSkyBlue"/>
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
         </Style>
+        
         <Style TargetType="Button" x:Key="DeleteButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}">
-            <Setter Property="Background" Value="#6d8698"/>
-            <Setter Property="Content" Value="x"/>
-            <Setter Property="Width" Value="20"/>
+            <Setter Property="Background" Value="{StaticResource LighterBackgroundBrush}"/>
+            <Setter Property="Content" Value="X"/>
             <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
         </Style>
+
         <Style TargetType="CheckBox">
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <BulletDecorator Background="Transparent">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="Border"
+                                        Width="20"
+                                        Height="20"
+                                        CornerRadius="5"
+                                        BorderThickness="1"
+                                        BorderBrush="{StaticResource DarkenedTextBrush}">
+                                    <Grid>
+                                        <Path Visibility="Collapsed"
+                                              Width="12"
+                                              Height="12"
+                                              x:Name="CheckMark"
+                                              Data="M0,4 5,12 12,0 4,7"
+                                              Fill="{StaticResource AccentBrush}">
+                                        </Path>
+                                    </Grid>
+                                </Border>
+                            </BulletDecorator.Bullet>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                                           Storyboard.TargetName="CheckMark">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{x:Static Visibility.Visible}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </BulletDecorator>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
+
         <Style TargetType="ListView">
-            <Setter Property="Background" Value="#1d2d3a"/>
+            <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
+
         <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultStyle}">
             <Setter Property="Focusable" Value="false"/>
             <Setter Property="Margin" Value="3 3"/>
             <Setter Property="Padding" Value="10, 0"/>
         </Style>
+
+        <Style TargetType="Rectangle" x:Key="SeparatorRectangle">
+            <Setter Property="Fill" Value="{StaticResource LighterBackgroundBrush}"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+
         <Style TargetType="TextBlock" x:Key="DefaultTextBlockStyle">
             <Setter Property="Margin" Value="3, 0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
+        
         <Style TargetType="TextBox" BasedOn="{StaticResource DefaultStyle}">
             <Setter Property="Margin" Value="4, 0"/>
             <Setter Property="Padding" Value="10, 0"/>
         </Style>
+
     </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -66,7 +133,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
         <TextBox x:Name="NewToDoTextBox"
                  Grid.Column="0"
@@ -75,20 +142,23 @@
                 Style="{StaticResource DefaultButtonStyle}"
                 Content="ADD"
                 Click="AddToDoButton_Click"
-                Margin="3, 0"
+                Margin="4, 0"
                 Grid.Column="1"
                 Grid.Row="0"/>
+        <Rectangle Style="{StaticResource SeparatorRectangle}"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="2"/>
         <ListView x:Name="ToDoListView"
-                  Height="Auto"
                   Grid.ColumnSpan="2"
-                  Grid.Row="1">
+                  Grid.Row="1"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:ToDo}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="400"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="478"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <CheckBox Name="ToDoCheckBox"
                                   IsChecked="{Binding IsChecked}"
@@ -102,8 +172,9 @@
                                    Foreground="{Binding TextColor}"
                                    Grid.Column="1"/>
                         <Button x:Name="DeleteButton"
-                                Click="DeleteButton_Click"
                                 Style="{StaticResource DeleteButtonStyle}"
+                                Click="DeleteButton_Click"
+                                HorizontalAlignment="Center"
                                 Grid.Column="2"/>
                     </Grid>
                 </DataTemplate>
