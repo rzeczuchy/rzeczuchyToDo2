@@ -18,18 +18,14 @@ namespace rzeczuchyToDo2
     public partial class MainWindow : Window
     {
         private List<ToDo> todos;
+        private ReaderWriter readerWriter;
 
         public MainWindow()
         {
             InitializeComponent();
+            readerWriter = new ReaderWriter();
 
-            todos = new List<ToDo>();
-            todos.Add(new ToDo("this is a checked ToDo", true));
-            todos.Add(new ToDo("this is an unchecked ToDo", false));
-            for (int i = 0; i < 24; i++)
-            {
-                todos.Add(new ToDo("this is an unchecked ToDo", false));
-            }
+            todos = readerWriter.ReadListFromFile();
             NewToDoTextBox.MaxLength = ToDo.MaxNameLenght;
             
             DisplayToDoList();
@@ -49,8 +45,9 @@ namespace rzeczuchyToDo2
             {
                 todos.Add(new ToDo(NewToDoTextBox.Text, false));
                 ToDoListView.Items.Refresh();
+                readerWriter.WriteList(todos);
+                NewToDoTextBox.Text = "";
             }
-            NewToDoTextBox.Text = "";
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -59,12 +56,14 @@ namespace rzeczuchyToDo2
             {
                 todos.Remove(todo);
                 ToDoListView.Items.Refresh();
+                readerWriter.WriteList(todos);
             }
         }
 
         private void ToDoCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             ToDoListView.Items.Refresh();
+            readerWriter.WriteList(todos);
         }
     }
 }
