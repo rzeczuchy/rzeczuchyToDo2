@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:rzeczuchyToDo2"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="rzeczuchyToDo2"
         Height="430"
         Width="600"
         Background="#1c2a39"
@@ -137,6 +137,7 @@
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
         <TextBox x:Name="NewToDoTextBox"
+                 KeyDown="NewToDoTextBox_KeyDown"
                  Grid.Column="0"
                  Grid.Row="0"/>
         <Button x:Name="AddToDoButton"

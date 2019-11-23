@@ -65,5 +65,13 @@ namespace rzeczuchyToDo2
             ToDoListView.Items.Refresh();
             readerWriter.WriteList(todos);
         }
+
+        private void NewToDoTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return || e.Key == Key.Enter)
+            {
+                AddToDoButton_Click(this, new RoutedEventArgs());
+            }
+        }
     }
 }
