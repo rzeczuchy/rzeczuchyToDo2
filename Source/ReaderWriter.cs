@@ -22,7 +22,7 @@ namespace rzeczuchyToDo2
             {
                 for (int i = 0; i < toDos.Count(); i++)
                 {
-                    streamWriter.WriteLine(toDos[i].Name + ',' + (toDos[i].IsChecked ? "d" : ""));
+                    streamWriter.WriteLine(toDos[i].Label + ',' + (toDos[i].IsChecked ? "d" : ""));
                 }
                 streamWriter.Close();
             }

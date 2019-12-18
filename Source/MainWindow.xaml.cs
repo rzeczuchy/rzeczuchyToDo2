@@ -47,6 +47,9 @@ namespace rzeczuchyToDo2
                 ToDoListView.Items.Refresh();
                 readerWriter.WriteList(todos);
                 NewToDoTextBox.Text = "";
+                Border border = (Border)VisualTreeHelper.GetChild(ToDoListView, 0);
+                ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+                scrollViewer.ScrollToBottom();
             }
         }
 
@@ -71,6 +74,19 @@ namespace rzeczuchyToDo2
             if (e.Key == Key.Return || e.Key == Key.Enter)
             {
                 AddToDoButton_Click(this, new RoutedEventArgs());
+            }
+        }
+
+        private void LabelBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            readerWriter.WriteList(todos);
+        }
+
+        private void LabelBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key == Key.Return || e.Key == Key.Enter) && sender is TextBox textbox)
+            {
+                NewToDoTextBox.Focus();
             }
         }
     }

@@ -119,10 +119,17 @@
             <Setter Property="Margin" Value="3, 0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-        
-        <Style TargetType="TextBox" BasedOn="{StaticResource DefaultStyle}">
+
+        <Style TargetType="TextBox" x:Key="DefaultTextBox" BasedOn="{StaticResource DefaultStyle}">
+            <Setter Property="CaretBrush" Value="{StaticResource TextBrush}"/>
             <Setter Property="Margin" Value="4, 0"/>
             <Setter Property="Padding" Value="10, 0"/>
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="3, 0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
     </Window.Resources>
@@ -137,6 +144,7 @@
             <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
         <TextBox x:Name="NewToDoTextBox"
+                 Style="{StaticResource DefaultTextBox}"
                  KeyDown="NewToDoTextBox_KeyDown"
                  Grid.Column="0"
                  Grid.Row="0"/>
@@ -158,7 +166,7 @@
                 <DataTemplate DataType="{x:Type local:ToDo}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="480"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
@@ -166,13 +174,15 @@
                                   IsChecked="{Binding IsChecked}"
                                   Checked="ToDoCheckBox_Checked"
                                   Unchecked="ToDoCheckBox_Checked"
+                                  VerticalAlignment="Center"
                                   Grid.Column="0"/>
-                        <TextBlock Name="NameBlock"
-                                   Style="{StaticResource DefaultTextBlockStyle}"
-                                   Text="{Binding Name}"
-                                   TextDecorations="{Binding Decorations}"
-                                   Foreground="{Binding TextColor}"
-                                   Grid.Column="1"/>
+                        <TextBox Name="LabelBox"
+                                 Text="{Binding Label, UpdateSourceTrigger=PropertyChanged}"
+                                 TextChanged="LabelBox_TextChanged"
+                                 KeyDown="LabelBox_KeyDown"
+                                 TextDecorations="{Binding Decorations}"
+                                 Foreground="{Binding TextColor}"
+                                 Grid.Column="1"/>
                         <Button x:Name="DeleteButton"
                                 Style="{StaticResource DeleteButtonStyle}"
                                 Click="DeleteButton_Click"
