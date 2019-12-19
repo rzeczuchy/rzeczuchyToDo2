@@ -16,13 +16,17 @@
         <Color x:Key="LightTextColor">White</Color>
         <Color x:Key="TextColor">WhiteSmoke</Color>
         <Color x:Key="DarkenedTextColor">LightSlateGray</Color>
+        <Color x:Key="LightBackgroundColor">#304760</Color>
+        <Color x:Key="LighterBackgroundColor">#596b7f</Color>
+        <Color x:Key="DarkBackgroundColor">#1c2a39</Color>
+        <Color x:Key="AccentColor">#c94570</Color>
         <SolidColorBrush x:Key="LightTextBrush" Color="{StaticResource LightTextColor}"/>
         <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}"/>
         <SolidColorBrush x:Key="DarkenedTextBrush" Color="{StaticResource DarkenedTextColor}"/>
-        <SolidColorBrush x:Key="LightBackgroundBrush" Color="#304760"/>
-        <SolidColorBrush x:Key="LighterBackgroundBrush" Color="#596b7f"/>
-        <SolidColorBrush x:Key="DarkBackgroundBrush" Color="#1c2a39"/>
-        <SolidColorBrush x:Key="AccentBrush" Color="#c94570"/>
+        <SolidColorBrush x:Key="LightBackgroundBrush" Color="{StaticResource LightBackgroundColor}"/>
+        <SolidColorBrush x:Key="LighterBackgroundBrush" Color="{StaticResource LighterBackgroundColor}"/>
+        <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource DarkBackgroundColor}"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
 
         <!--Default styles-->
         <Style TargetType="{x:Type Control}" x:Key="DefaultStyle">
@@ -41,14 +45,28 @@
                 </Style>
             </Style.Resources>
         </Style>
-        
+
         <!--Button-->
         <Style TargetType="Button" x:Key="DefaultButtonStyle" BasedOn="{StaticResource DefaultStyle}">
             <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
             <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
-        
+
         <!--Delete button-->
         <Style TargetType="Button" x:Key="DeleteButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Background" Value="{StaticResource LighterBackgroundBrush}"/>
@@ -143,9 +161,75 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
+        <!--Scrollbar-->
+        <Style TargetType="{x:Type Thumb}" x:Key="ScrollBarThumbStyle">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Background="{TemplateBinding Background}"
+                                Width="8"
+                                CornerRadius="3"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Track x:Name="PART_Track"
+                       IsDirectionReversed="True">
+                    <Track.Thumb>
+                        <Thumb x:Name="VerticalThumb"
+                               Style="{StaticResource ScrollBarThumbStyle}">
+                            <Thumb.Background>
+                                <SolidColorBrush Color="{StaticResource LightBackgroundColor}"/>
+                            </Thumb.Background>
+                        </Thumb>
+                    </Track.Thumb>
+                </Track>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="MouseStates">
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard>
+                                <Storyboard>
+                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="VerticalThumb" 
+                                                              Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                        <LinearColorKeyFrame KeyTime="0"
+                                                             Value="{StaticResource LighterBackgroundColor}"/>
+                                    </ColorAnimationUsingKeyFrames>
+                                </Storyboard>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed"/>
+                        <VisualState x:Name="Disabled"/>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+            </Grid>
+        </ControlTemplate>
+
+        <Style TargetType="{x:Type ScrollBar}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="Width" Value="15"/>
+                    <Setter Property="Height" Value="Auto"/>
+                    <Setter Property="Margin" Value="0, 3"/>
+                    <Setter Property="Template" Value="{StaticResource VerticalScrollBar}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
-    
-    <Grid>
+
+    <Grid x:Name="MainGrid"
+          Margin="3"
+          SnapsToDevicePixels="True">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
             <ColumnDefinition Width="*"/>
@@ -176,7 +260,7 @@
                   ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type local:ToDo}">
-                    <Grid>
+                    <Grid x:Name="ListItemGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="480"/>

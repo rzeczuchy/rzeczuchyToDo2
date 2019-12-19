@@ -27,7 +27,8 @@ namespace rzeczuchyToDo2
 
             todos = readerWriter.ReadListFromFile();
             NewToDoTextBox.MaxLength = ToDo.MaxNameLenght;
-            
+            NewToDoTextBox.Focus();
+
             DisplayToDoList();
         }
 
@@ -41,6 +42,7 @@ namespace rzeczuchyToDo2
                 NewToDoTextBox.Text = "";
                 ScrollListToBottom();
             }
+            NewToDoTextBox.Focus();
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
