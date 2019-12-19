@@ -17,8 +17,8 @@ namespace rzeczuchyToDo2
 {
     public partial class MainWindow : Window
     {
-        private List<ToDo> todos;
-        private ReaderWriter readerWriter;
+        private readonly List<ToDo> todos;
+        private readonly ReaderWriter readerWriter;
 
         public MainWindow()
         {
