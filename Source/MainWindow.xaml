@@ -12,6 +12,7 @@
         ResizeMode="CanMinimize">
 
     <Window.Resources>
+        <!--Colors and brushes-->
         <Color x:Key="LightTextColor">White</Color>
         <Color x:Key="TextColor">WhiteSmoke</Color>
         <Color x:Key="DarkenedTextColor">LightSlateGray</Color>
@@ -23,14 +24,15 @@
         <SolidColorBrush x:Key="DarkBackgroundBrush" Color="#1c2a39"/>
         <SolidColorBrush x:Key="AccentBrush" Color="#c94570"/>
 
+        <!--Default styles-->
         <Style TargetType="{x:Type Control}" x:Key="DefaultStyle">
             <Setter Property="Background" Value="{StaticResource LightBackgroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
             <Setter Property="BorderBrush" Value="{StaticResource LighterBackgroundBrush}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Calibri"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="600"/>
-            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Style.Resources>
@@ -40,20 +42,23 @@
             </Style.Resources>
         </Style>
         
+        <!--Button-->
         <Style TargetType="Button" x:Key="DefaultButtonStyle" BasedOn="{StaticResource DefaultStyle}">
             <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
-            <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Foreground" Value="{StaticResource LightTextBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
         </Style>
         
+        <!--Delete button-->
         <Style TargetType="Button" x:Key="DeleteButtonStyle" BasedOn="{StaticResource DefaultButtonStyle}">
             <Setter Property="Background" Value="{StaticResource LighterBackgroundBrush}"/>
-            <Setter Property="Content" Value="X"/>
             <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="Content" Value="X"/>
             <Setter Property="Height" Value="20"/>
             <Setter Property="Width" Value="20"/>
         </Style>
 
+        <!--Checkbox-->
         <Style TargetType="CheckBox">
             <Setter Property="Template">
                 <Setter.Value>
@@ -97,17 +102,20 @@
             </Setter>
         </Style>
 
+        <!--List view-->
         <Style TargetType="ListView">
             <Setter Property="Background" Value="{StaticResource DarkBackgroundBrush}"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
 
+        <!--List view item-->
         <Style TargetType="ListViewItem" BasedOn="{StaticResource DefaultStyle}">
             <Setter Property="Focusable" Value="false"/>
             <Setter Property="Margin" Value="3 3"/>
             <Setter Property="Padding" Value="10, 0"/>
         </Style>
 
+        <!--Separator-->
         <Style TargetType="Rectangle" x:Key="SeparatorRectangle">
             <Setter Property="Fill" Value="{StaticResource LighterBackgroundBrush}"/>
             <Setter Property="Height" Value="1"/>
@@ -115,17 +123,20 @@
             <Setter Property="VerticalAlignment" Value="Bottom"/>
         </Style>
 
+        <!--Text block-->
         <Style TargetType="TextBlock" x:Key="DefaultTextBlockStyle">
             <Setter Property="Margin" Value="3, 0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
+        <!--Text box-->
         <Style TargetType="TextBox" x:Key="DefaultTextBox" BasedOn="{StaticResource DefaultStyle}">
             <Setter Property="CaretBrush" Value="{StaticResource TextBrush}"/>
             <Setter Property="Margin" Value="4, 0"/>
             <Setter Property="Padding" Value="10, 0"/>
         </Style>
 
+        <!--Transparent text box-->
         <Style TargetType="TextBox" BasedOn="{StaticResource DefaultTextBox}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Margin" Value="3, 0"/>
@@ -155,7 +166,8 @@
                 Margin="4, 0"
                 Grid.Column="1"
                 Grid.Row="0"/>
-        <Rectangle Style="{StaticResource SeparatorRectangle}"
+        <Rectangle x:Name="AddFromListSeparator"
+                   Style="{StaticResource SeparatorRectangle}"
                    Grid.Row="0"
                    Grid.ColumnSpan="2"/>
         <ListView x:Name="ToDoListView"

@@ -31,14 +31,6 @@ namespace rzeczuchyToDo2
             DisplayToDoList();
         }
 
-        private void DisplayToDoList()
-        {
-            if (todos != null)
-            {
-                ToDoListView.ItemsSource = todos;
-            }
-        }
-
         private void AddToDoButton_Click(object sender, RoutedEventArgs e)
         {
             if (NewToDoTextBox.Text != "")
@@ -47,9 +39,7 @@ namespace rzeczuchyToDo2
                 ToDoListView.Items.Refresh();
                 readerWriter.WriteList(todos);
                 NewToDoTextBox.Text = "";
-                Border border = (Border)VisualTreeHelper.GetChild(ToDoListView, 0);
-                ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
-                scrollViewer.ScrollToBottom();
+                ScrollListToBottom();
             }
         }
 
@@ -59,14 +49,14 @@ namespace rzeczuchyToDo2
             {
                 todos.Remove(todo);
                 ToDoListView.Items.Refresh();
-                readerWriter.WriteList(todos);
+                SaveToDoList();
             }
         }
 
         private void ToDoCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             ToDoListView.Items.Refresh();
-            readerWriter.WriteList(todos);
+            SaveToDoList();
         }
 
         private void NewToDoTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -79,7 +69,7 @@ namespace rzeczuchyToDo2
 
         private void LabelBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            readerWriter.WriteList(todos);
+            SaveToDoList();
         }
 
         private void LabelBox_KeyDown(object sender, KeyEventArgs e)
@@ -88,6 +78,26 @@ namespace rzeczuchyToDo2
             {
                 NewToDoTextBox.Focus();
             }
+        }
+
+        private void DisplayToDoList()
+        {
+            if (todos != null)
+            {
+                ToDoListView.ItemsSource = todos;
+            }
+        }
+
+        private void ScrollListToBottom()
+        {
+            Border border = (Border)VisualTreeHelper.GetChild(ToDoListView, 0);
+            ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+            scrollViewer.ScrollToBottom();
+        }
+
+        private void SaveToDoList()
+        {
+            readerWriter.WriteList(todos);
         }
     }
 }
