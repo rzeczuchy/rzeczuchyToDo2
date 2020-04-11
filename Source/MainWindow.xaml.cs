@@ -25,7 +25,7 @@ namespace rzeczuchyToDo2
             InitializeComponent();
             readerWriter = new ReaderWriter();
 
-            todos = readerWriter.ReadListFromFile();
+            todos = readerWriter.LoadToDos();
             NewToDoTextBox.MaxLength = ToDo.MaxNameLenght;
             NewToDoTextBox.Focus();
 
@@ -38,7 +38,7 @@ namespace rzeczuchyToDo2
             {
                 todos.Add(new ToDo(NewToDoTextBox.Text, false));
                 ToDoListView.Items.Refresh();
-                readerWriter.WriteList(todos);
+                readerWriter.SaveToDos(todos);
                 NewToDoTextBox.Text = "";
                 ScrollListToBottom();
             }
@@ -99,7 +99,7 @@ namespace rzeczuchyToDo2
 
         private void SaveToDoList()
         {
-            readerWriter.WriteList(todos);
+            readerWriter.SaveToDos(todos);
         }
     }
 }
