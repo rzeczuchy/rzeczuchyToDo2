@@ -21,10 +21,5 @@ namespace rzeczuchyToDo2
         public bool IsDone { get; set; }
         public SolidColorBrush TextColor { get { return IsDone ? inactive : active; } }
         public TextDecorationCollection Decorations { get { return IsDone ? TextDecorations.Strikethrough : null; } }
-
-        public override string ToString()
-        {
-            return Label;
-        }
     }
 }
