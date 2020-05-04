@@ -71,7 +71,7 @@ namespace rzeczuchyToDo2
             {
                 writer.WriteStartElement("ToDo");
                 writer.WriteAttributeString("Label", todo.Label);
-                writer.WriteAttributeString("Done", todo.IsDone.ToString());
+                writer.WriteAttributeString("Done", todo.IsChecked.ToString());
                 writer.WriteEndElement();
             }
         }
